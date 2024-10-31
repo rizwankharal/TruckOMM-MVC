@@ -1,0 +1,6 @@
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DomainEntities\bin\Debug\DomainEntities.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DomainEntities\bin\Debug\DomainEntities.pdb
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DomainEntities\obj\Debug\DomainEntities.csproj.AssemblyReference.cache
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DomainEntities\obj\Debug\DomainEntities.csproj.CoreCompileInputs.cache
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DomainEntities\obj\Debug\DomainEntities.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DomainEntities\obj\Debug\DomainEntities.pdb

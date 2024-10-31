@@ -1,0 +1,333 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<main>
+    <div class="container mt-4">
+        <h2>Maintenance Records</h2>
+        <div> <button onclick="AddNewMaintenanceRecord()" class="btn btn-primary"> Add Maintenance Record</button></div>
+        <table id="MaintenanceTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Notes</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row showAddModal">
+        <div class="modal" tabindex="-1" id="NewMaintenanceModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Maintenance</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+
+                        <form asp-action="Create" id="NewMaintenanceForm" method="post">
+
+                            <div class="form-group">
+                                <label for="VehicleID" class="control-label">Select Vehicle:</label>
+                                <select id="VehicleDl" class="form-control" style=" max-width: 96%">
+                                    <option value="0">-- Select a Vehicle --</option>
+                                </select>
+                                <span asp-validation-for="VehicleID" id="VehicleIDError" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Type" class="control-label">Type:</label>
+                                <input asp-for="Typetxt" id="Typetxt" class="form-control" style=" max-width: 96%" />
+                                <span asp-validation-for="Type" id="TypeError" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Date" class="control-label">Date:</label>
+                                <input asp-for="Datetxt" id="Datetxt" class="form-control" type="date" style=" max-width: 96%" />
+                                <span asp-validation-for="Date" id="DateError" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label">Description:</label>
+                                <input type="text" id="Descriptiontxt" asp-for="Description" class="form-control" style=" max-width: 96%" />
+                                <span asp-validation-for="Description" id="DescriptionError" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Notes" class="control-label">Notes:</label>
+                                <textarea id="Notestxt" asp-for="Notes" class="form-control" style=" max-width: 96%"></textarea>
+                                <span asp-validation-for="Notes" id="NotesError" class="text-danger"></span>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CloseModal()">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="SaveMaintenanceData()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal" tabindex="-1" id="DeleteMaintenanceModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Record</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <h6>Do you want to delete this record</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CloseDeleteModal()">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="DeleteMaintenanceData()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</main>
+
+<!-- JavaScript Bundles -->
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/datatables")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        LoadMaintenanceTable();
+
+    });
+
+    function LoadMaintenanceTable() {
+           $('#MaintenanceTable').DataTable({
+       "ajax": {
+           "url": '@Url.Action("FetchDataFromVehiclesAndMaintienance", "Home")',
+           "dataSrc": ""
+               },
+               "bDestroy": true,
+               "order": [[0, "desc"]],
+       "columns": [
+           { "data": "id" },
+           { "data": "model" },
+           {
+               "data": "date",
+               "render": function (data) {
+
+                   const time = parseInt(data.replace(/\/Date\((\d+)\)\//, '$1'));
+
+                   const newdate = new Date(time);
+
+                   return newdate.toLocaleDateString('en-US');
+               }
+           },
+           { "data": "description" },
+           { "data": "notes" },
+           { "data": "type" },
+           {
+               'data': null,
+               'render': function (data) {
+
+                   return '<button id="deleteBtn" class="btn btn-danger" onclick="deleteClick(\'' + data.id + '\')">Delete</button>' +
+                       '<button id="updateBtn" class="btn btn-primary" onclick="UpdateClick(\'' + data.id + '\',\'' + data.type + '\',\'' + data.vehicleID + '\', \'' + data.description + '\', \'' + data.notes + '\', \'' + data.date + '\')">Update</button>';
+               }
+
+           }
+       ]
+   });
+    }
+
+
+    function AddNewMaintenanceRecord() {
+        LoadVehicals(0);
+        $('#NewMaintenanceModal').modal('show');
+    }
+
+    function LoadVehicals(vehicleID)
+    {
+        $.ajax({
+            "url": '@Url.Action("FetchVehicalsData", "Home")',
+            type: "Get",
+            success: function (data) {
+
+                for (var i = 0; i < data.length; i++) {
+                    var opt = new Option(data[i].model, data[i].id);
+                    $('#VehicleDl').append(opt);
+
+                }
+                $('#VehicleDl').val(vehicleID);
+            }
+
+        });
+
+
+    }
+    function CloseModal()
+    {
+        $('#NewMaintenanceForm').trigger("reset");
+    }
+
+    var MaintinaceID = 0;
+    var DeleteMaintinaceID = 0;
+
+    function SaveMaintenanceData()
+    {
+
+        if ($("#VehicleDl").val() == "0")
+        {
+            $("#VehicleIDError").text("Please select Vehicle type");
+            return
+        }
+        else
+        {
+            $("#VehicleIDError").text("");
+        }
+        if ($("#Typetxt").val()=="")
+        {
+            $("#TypeError").text("Please enter type info");
+            return
+         }
+        else
+        {
+            $("#TypeError").text("");
+        }
+        if ($("#Datetxt").val() == "")
+        {
+            $("#DateError").text("Please enter type info");
+            return
+         }
+         else
+         {
+             $("#DateError").text("");
+         }
+        if ($("#Descriptiontxt").val() == "")
+        {
+            $("#DescriptionError").text("Please enter Description");
+            return
+         }
+         else {
+             $("#DescriptionError").text("");
+         }
+        if ($("#Notestxt").val() == "") {
+            $("#NotesError").text("Please enter notes");
+            return
+        }
+        else {
+            $("#NotesError").text("");
+        }
+
+        let formData = {
+            Notes: $("#Notestxt").val(),
+            Description: $("#Descriptiontxt").val(),
+            Date: $("#Datetxt").val(),
+            Type: $("#Typetxt").val(),
+            vehicleID: $("#VehicleDl").val(),
+            id: MaintinaceID
+
+        }
+
+            $.ajax({
+            url: '@Url.Action("AddMaintenanceData", "Home")',
+            type: 'POST',
+            data: JSON.stringify(formData),
+            contentType: 'application/json; charset=utf-8',
+                success: function (response)
+                {
+                    debugger
+                    if (response.success)
+                    {
+                    debugger
+                        $('#NewMaintenanceModal').modal('hide');
+                    LoadMaintenanceTable();
+                    }
+                    else {
+                    alert("Error: " + response.message);
+                }
+            },
+            error: function (error) {
+                alert("An error occurred: " + error.responseText);
+            }
+        });
+            console.log(formData)
+        }
+
+
+    function UpdateClick(id, type, vehicleID, description, notes,date)
+    {
+        LoadVehicals(0);
+        $('#NewMaintenanceModal').modal('show');
+
+        const getdate = parseInt(date.match(/\d+/)[0]);
+
+        const newdate = new Date(getdate);
+
+        const year = newdate.getFullYear();
+        const month = String(newdate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed, so add 1
+        const day = String(newdate.getDate()).padStart(2, '0');
+
+        const formattedDate = `${year}-${month}-${day}`;
+
+
+       // let formattedDate = newdate.toLocaleDateString('en-US');
+
+        $("#Notestxt").val(notes);
+        $("#Descriptiontxt").val(description);
+        $("#Datetxt").val(formattedDate);
+        $("#Typetxt").val(type);
+        LoadVehicals(vehicleID);
+        MaintinaceID = id;
+
+
+    }
+
+    function deleteClick(id)
+    {
+        DeleteMaintinaceID = id;
+        $('#DeleteMaintenanceModal').modal('show');
+    }
+
+    function DeleteMaintenanceData()
+    {
+            $.ajax({
+    url: '@Url.Action("DeleteMaintenanceData", "Home")',
+    type: 'POST',
+                data: JSON.stringify({ id: DeleteMaintinaceID }), 
+    contentType: 'application/json; charset=utf-8',
+        success: function (response)
+        {
+            debugger
+            if (response.success)
+            {
+            debugger
+                $('#DeleteMaintenanceModal').modal('hide');
+            LoadMaintenanceTable();
+            }
+            else {
+            alert("Error: " + response.message);
+        }
+    },
+    error: function (error) {
+        alert("An error occurred: " + error.responseText);
+    }
+});
+    }
+
+</script>
+

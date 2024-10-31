@@ -1,0 +1,9 @@
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\bin\Debug\DomainEntities.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\bin\Debug\DomainEntities.pdb
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\obj\Debug\DataAcce.E67BD773.Up2Date
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

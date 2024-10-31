@@ -1,0 +1,11 @@
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\bin\Debug\BusinessLayer.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\bin\Debug\BusinessLayer.pdb
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\bin\Debug\DomainEntities.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\bin\Debug\DomainEntities.pdb
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\obj\Debug\BusinessLayer.csproj.AssemblyReference.cache
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\obj\Debug\Business.EA331CBA.Up2Date
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\obj\Debug\BusinessLayer.dll
+C:\Users\mrizwan\source\repos\TransportationManagementSystemMaintenanceModule\BusinessLayer\obj\Debug\BusinessLayer.pdb
